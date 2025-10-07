@@ -4,7 +4,7 @@
 
 Turn simple phone snapshots of your menu items into stunning, professional-grade photographs that attract more customers and drive sales. No expensive photoshoots, no complicated software. Just beautiful food photography, ready in seconds.
 
-![MenuReady AI Photo Studio Screenshot](https://storage.googleapis.com/aistudio-hosting/project-assets/b2a1e3b4-f3d8-4a1e-8e6f-7d1c2d3b4e5f/app_screenshot.png)
+<!-- TODO: Add a new screenshot of the application here. -->
 
 ## 🤔 Why Use This Tool for Your Business?
 
