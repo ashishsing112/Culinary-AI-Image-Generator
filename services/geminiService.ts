@@ -1,4 +1,5 @@
 import { GoogleGenAI, Modality, GenerateContentResponse } from "@google/genai";
+import { TransformMode } from "../types";
 
 const API_KEY = process.env.API_KEY;
 
@@ -44,17 +45,25 @@ const callGemini = async (base64ImageData: string, mimeType: string, prompt: str
  * Transforms a food image into a professional photograph using the Gemini API.
  * @param base64ImageData The base64 encoded string of the image.
  * @param mimeType The MIME type of the image (e.g., 'image/jpeg').
+ * @param mode The transformation mode ('reimagine' or 'polish').
  * @param foodLabel An optional label for the food item to improve results.
  * @returns A promise that resolves to the base64 encoded string of the generated image.
  */
 export const transformFoodImage = async (
   base64ImageData: string,
   mimeType: string,
+  mode: TransformMode,
   foodLabel?: string
 ): Promise<string> => {
   
-  const specificFood = foodLabel ? `of ${foodLabel}` : 'of food';
-  const prompt = `Transform this image ${specificFood} into a professional food photograph. The photo must have a 1:1 aspect ratio and professional food photography lighting. Reimagine the plating and presentation to be highly contextual and authentic to the dish. For example, rustic pasta might be in a warm, ceramic bowl, while delicate sushi could be on a minimalist slate. The setting, utensils, and garnishes must complement the food's origin and style. The final composition should be elegant, making the dish look incredibly delicious and appetizing. Enhance colors and textures to make the dish pop.`;
+  let prompt = '';
+
+  if (mode === 'reimagine') {
+    const specificFood = foodLabel ? `of ${foodLabel}` : 'of food';
+    prompt = `Transform this image ${specificFood} into a professional food photograph. The photo must have a 1:1 aspect ratio and professional food photography lighting. Reimagine the plating and presentation to be highly contextual and authentic to the dish. For example, rustic pasta might be in a warm, ceramic bowl, while delicate sushi could be on a minimalist slate. The setting, utensils, and garnishes must complement the food's origin and style. The final composition should be elegant, making the dish look incredibly delicious and appetizing. Enhance colors and textures to make the dish pop.`;
+  } else { // 'polish'
+    prompt = `A professional food photography shot of the dish from the reference image. The dish should be artfully arranged on a clean, pristine white ceramic plate. The photo is taken from a 45-degree angle in a bright, minimalist studio environment with soft, diffused lighting. The focus is sharp on the food, with a slightly blurred background. Photorealistic, high detail, appetizing. The final image must have a 1:1 aspect ratio.`;
+  }
   
   try {
     const result = await callGemini(base64ImageData, mimeType, prompt);

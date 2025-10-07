@@ -1,4 +1,3 @@
-
 export enum AppStatus {
   IDLE = 'IDLE',
   UPLOADING = 'UPLOADING',
@@ -6,3 +5,5 @@ export enum AppStatus {
   SUCCESS = 'SUCCESS',
   ERROR = 'ERROR',
 }
+
+export type TransformMode = 'reimagine' | 'polish';

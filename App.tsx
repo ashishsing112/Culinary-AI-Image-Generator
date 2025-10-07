@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
-import { AppStatus } from './types';
+import { AppStatus, TransformMode } from './types';
 import { transformFoodImage } from './services/geminiService';
 import Header from './components/Header';
 import ImageCard from './components/ImageCard';
@@ -7,6 +7,7 @@ import FileUpload from './components/FileUpload';
 import SparklesIcon from './components/icons/SparklesIcon';
 import DownloadIcon from './components/icons/DownloadIcon';
 import ImageModal from './components/ImageModal';
+import ModeSelector from './components/ModeSelector';
 
 
 // Helper to convert file to base64
@@ -27,6 +28,7 @@ const App: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [foodLabel, setFoodLabel] = useState<string>('');
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
+  const [transformMode, setTransformMode] = useState<TransformMode>('reimagine');
   
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -68,7 +70,7 @@ const App: React.FC = () => {
 
     try {
       const base64Data = originalImage.split(',')[1];
-      const resultBase64 = await transformFoodImage(base64Data, originalMimeType, foodLabel);
+      const resultBase64 = await transformFoodImage(base64Data, originalMimeType, transformMode, foodLabel);
       const resultUrl = `data:image/jpeg;base64,${resultBase64}`;
       setGeneratedImage(resultUrl);
       setStatus(AppStatus.SUCCESS);
@@ -77,7 +79,7 @@ const App: React.FC = () => {
       setError(errorMessage);
       setStatus(AppStatus.ERROR);
     }
-  }, [originalImage, originalMimeType, foodLabel]);
+  }, [originalImage, originalMimeType, foodLabel, transformMode]);
 
   const handleClear = () => {
     setOriginalImage(null);
@@ -173,6 +175,7 @@ const App: React.FC = () => {
             className="w-full bg-slate-800 border-2 border-slate-700 text-white placeholder-slate-500 text-base rounded-lg focus:ring-sky-500 focus:border-sky-500 block p-3 transition-colors duration-200"
             disabled={isProcessing}
           />
+          <ModeSelector selectedMode={transformMode} onModeChange={setTransformMode} disabled={isProcessing} />
           <button
             onClick={handleTransformClick}
             disabled={!originalImage || isProcessing}
