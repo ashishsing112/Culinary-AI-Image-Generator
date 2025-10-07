@@ -1,11 +1,59 @@
-<div align="center">
+#  Culinary AI Photographer
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+Transform your simple food photos into delicious, professional-grade masterpieces with the power of AI. This web application provides an easy-to-use interface to upload a food image, and our AI assistant will transform it into a stunning, professional-quality photograph with a perfect 1:1 aspect ratio, ready for your food blog or social media.
 
-  <h1>Built with AI Studio</h2>
+![Culinary AI Photographer Screenshot](https://storage.googleapis.com/aistudio-hosting/project-assets/b2a1e3b4-f3d8-4a1e-8e6f-7d1c2d3b4e5f/app_screenshot.png)
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## ✨ Features
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+-   **AI-Powered Image Transformation**: Utilizes Google's Gemini API (`gemini-2.5-flash-image`) to intelligently edit and enhance food photos.
+-   **Contextual Presentation AI**: The AI prompt is specifically designed to create a presentation (plating, utensils, setting) that is authentic and contextual to the specific food, enhancing its appeal.
+-   **Enlarge Image View**: Click on the generated AI photo to view it in a full-screen modal, perfect for appreciating the details.
+-   **Download Generated Image**: Easily save the high-quality, AI-generated photo to your device with a single click.
+-   **Simple File Upload**: Upload your food images (JPEG, PNG, WebP) from your device with a simple, clickable interface.
+-   **Contextual Prompts**: Add a text label (e.g., "Spaghetti Bolognese") to give the AI more context for better, more accurate results.
+-   **Side-by-Side Comparison**: Instantly compare your original photo with the professionally generated image.
+-   **Responsive Design**: A clean, modern, and fully responsive UI built with Tailwind CSS that works beautifully on all devices.
+-   **Loading & Error States**: Clear feedback for users during image processing and for any potential errors.
 
-</div>
+## 🚀 How It Works
+
+This application is a single-page web app built with modern frontend technologies.
+
+1.  **Image Upload**: The user selects a food photo from their computer. The app reads the file and displays it as a preview.
+2.  **AI Prompting**: The user can optionally provide a text label for the food. When the "Make it Professional" button is clicked, the app sends the image data and a carefully crafted text prompt to the Gemini API.
+3.  **Gemini API Call**: The `gemini-2.5-flash-image` model processes the input image and text. The prompt instructs the AI to act as a professional food photographer, reimagining the plating, utensils, and setting to be authentic and contextual to the dish. It focuses on professional lighting, composition, color, and texture, while ensuring a 1:1 aspect ratio.
+4.  **Display & Interact**: The API returns the newly generated image, which is then displayed alongside the original. The user can click to enlarge the new image or download it directly.
+
+## 🛠️ Tech Stack
+
+-   **Frontend**: [React](https://reactjs.org/) & [TypeScript](https://www.typescriptlang.org/)
+-   **AI Model**: [Google Gemini API (`gemini-2.5-flash-image`)](https://ai.google.dev/) via `@google/genai` SDK
+-   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+-   **Bundling/Environment**: The app is designed to run in an environment where `esbuild` or a similar tool handles module resolution, as seen in `index.html`.
+
+## ⚙️ Setup and Running
+
+To run this project, you need to have an environment that can serve the static files and provide the necessary API key.
+
+1.  **Clone the repository** (or have the project files).
+2.  **Set up your API Key**: The application requires a Google Gemini API key. This key must be available as an environment variable named `API_KEY`.
+
+    ```
+    # In your environment setup (e.g., .env file or server configuration)
+    API_KEY="YOUR_GEMINI_API_KEY_HERE"
+    ```
+
+3.  **Serve the files**: Use a simple local server to host the `index.html` and its associated JavaScript/TypeScript files.
+
+##  usage
+
+1.  Open the application in your web browser.
+2.  Click the **"Upload Food Photo"** button or the placeholder card and select an image file from your device.
+3.  Your uploaded image will appear in the "Original Food Photo" card.
+4.  (Optional but recommended) In the text box, type the name of the food (e.g., "Avocado Toast", "Chocolate Lava Cake").
+5.  Click the **"Make it Professional"** button.
+6.  Wait a few moments while the AI works its magic. A loading spinner will indicate that the image is being processed.
+7.  The new, professionally styled image will appear in the "Professional AI Photo" card.
+8.  Click on the new image to view it in a larger pop-up.
+9.  Click the **"Download Photo"** button to save the image to your computer.
